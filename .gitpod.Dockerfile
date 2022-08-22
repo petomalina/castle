@@ -7,5 +7,5 @@ RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee /usr/s
 RUN sudo apt-get update && sudo apt-get install google-cloud-cli
 
 # install pulumi
-RUN curl -fsSL https://get.pulumi.com | sh
+RUN curl -fsSL https://get.pulumi.com | sh -s -- --version 3.38.0
 ENV PATH="${PATH}:/home/gitpod/.pulumi/bin"
