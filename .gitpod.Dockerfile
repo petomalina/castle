@@ -10,7 +10,7 @@ RUN sudo apt-get update && sudo apt-get install google-cloud-cli
 RUN sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
 
 # install pulumi
-ENV PULUMI_VERSION="3.38.0"
+ENV PULUMI_VERSION="3.40.0"
 RUN curl -fsSL https://get.pulumi.com | sh -s -- --version $PULUMI_VERSION
 ENV PATH="${PATH}:/home/gitpod/.pulumi/bin"
 
@@ -25,3 +25,10 @@ RUN curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/$SKAFFOLD
 # install k9s
 # ENV K9S_VERSION="0.26.3"
 RUN brew install k9s
+
+ENV TERRAFORM_VERSION=1.2.9
+ENV TERRAFORM_VERSION_SHA256SUM=0e0fc38641addac17103122e1953a9afad764a90e74daf4ff8ceeba4e362f2fb
+RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+RUN echo "${TERRAFORM_VERSION_SHA256SUM}  terraform_${TERRAFORM_VERSION}_linux_amd64.zip" > checksum && sha256sum -c checksum
+RUN mkdir .terraform && unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d .terraform/bin
+ENV PATH="${PATH}:/home/gitpod/.terraform/bin"
